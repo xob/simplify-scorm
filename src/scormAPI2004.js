@@ -326,6 +326,9 @@
         }
 
         refObject = refObject[attribute];
+        if (refObject.hasOwnProperty("childArray")) {
+          refObject = refObject.childArray;
+        }
       }
 
       return refObject || "";

@@ -286,30 +286,28 @@
 
       var structure = CMIElement.split(".");
       var refObject = _self;
-      var lastProperty = null;
 
       for (var i = 0; i < structure.length; i++) {
-        lastProperty = structure[i];
+        var attribute = structure[i];
 
-        if (i === structure.length - 1) {
-          if (!refObject.hasOwnProperty(structure[i])) {
-            _self.throwSCORMError(101, "getCMIValue did not find a value for: " + CMIElement);
-          }
-        }
-
-        refObject = refObject[structure[i]];
-      }
-
-      if (refObject === null || refObject === undefined) {
-        if (lastProperty === "_children") {
+        if (!refObject.hasOwnProperty(attribute)) {
+          _self.throwSCORMError(101, "getCMIValue did not find a value for: " + CMIElement);
+          return "";
+        } else if (attribute === "_children") {
           _self.throwSCORMError(202);
-        } else if (lastProperty === "_count") {
+          return "";
+        } else if (attribute === "_count") {
           _self.throwSCORMError(203);
+          return "";
         }
-        return "";
-      } else {
-        return refObject;
+
+        refObject = refObject[attribute];
+        if (refObject.hasOwnProperty("childArray")) {
+          refObject = refObject.childArray;
+        }
       }
+
+      return refObject || "";
     }
 
     /**
