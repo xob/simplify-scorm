@@ -22,6 +22,7 @@
     "sinon-chai": "^3.0.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "watch": "grunt watch"
   }
 }
